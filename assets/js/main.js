@@ -53,8 +53,8 @@
 	// Panels.
 
 
-	const handleAnimation=()=>{
-		if(! $('#gallerySlider')){
+	const handleAnimation = () => {
+		if (!$('#gallerySlider')) {
 			return
 		}
 		const imageUrls = [
@@ -63,37 +63,57 @@
 			'images/pic03.jpg',
 			'images/me.jpg',
 			// Add more URLs as needed
-		  ];
-		  
-	 
-		  
-		  let currentIndex = 0;
-		  
-		  setInterval(() => {
-			$('#gallerySlider').fadeOut(500, function() {
-			  $(this).attr('src', imageUrls[currentIndex]).fadeIn(500);
-			  currentIndex = (currentIndex + 1) % imageUrls.length;
+		];
+
+
+
+		let currentIndex = 0;
+
+		setInterval(() => {
+			$('#gallerySlider').fadeOut(500, function () {
+				$(this).attr('src', imageUrls[currentIndex]).fadeIn(500);
+				currentIndex = (currentIndex + 1) % imageUrls.length;
 			});
-		  }, 1800);
+		}, 1800);
 	}
 	handleAnimation()
+
+	const getAgentName = () => {
+
+		if (window.location.search) {
+			const urlParams = new URLSearchParams(window.location.search);
+			let agentName = urlParams.get('agentName');
+			agentName = agentName.split("#")[0] || '';
+
+
+			return agentName
+
+
+		}
+		return '';
+	}
 	const handleLoadAgent = (agentName) => {
+		if (!agentName) {
+			location.href = '#home';
+			return
+		}
 		$('#agentTab').removeClass('hidden');
 		// debugger
 		var defaultHtmlContent = `agents/empty.html`;
 
 		if (agentName) {
 			defaultHtmlContent = `agents/${agentName}.html?t=${new Date().getTime()}`;
+
+			$.ajax({
+				url: defaultHtmlContent,
+				method: 'GET',
+				dataType: 'html',
+				success: function (data) {
+					$('#agentIframe').html(data);
+					// code to be executed after the template is loaded
+				}
+			});
 		}
-		$.ajax({
-			url: defaultHtmlContent,
-			method: 'GET',
-			dataType: 'html',
-			success: function (data) {
-				$('#agentIframe').html(data);
-				// code to be executed after the template is loaded
-			}
-		});
 
 
 	}
@@ -102,13 +122,17 @@
 
 		var $panel, $link;
 
-		if (window.location.search) { 
-			const urlParams = new URLSearchParams(window.location.search);
-			const agentName = urlParams.get('agentName');
- 
-			localStorage.setItem('agent-target', (agentName));
-			location.href='#agent'; 
 
+
+		const agentName = getAgentName();
+		if (!agentName && window.location.hash == '#agent') {
+			location.href = '#home';
+			return;
+		}
+
+		if (agentName && window.location.hash === '#agent') {
+			handleLoadAgent(agentName);
+			
 		}
 		// Get panel, link.
 		if (window.location.hash) {
@@ -141,14 +165,9 @@
 
 	})();
 
-	// agent click event.
-	$(document).on('click', '[data-agent-target]', function (event) {
-		var agentName = $(this).attr('data-agent-target')
-		localStorage.setItem('agent-target', (agentName));
-		// debugger
-	});
+
 	// Hashchange event.
-	$window.on('hashchange', function (event) { 
+	$window.on('hashchange', function (event) {
 		var $panel, $link;
 
 		// Get panel, link.
@@ -164,9 +183,8 @@
 
 
 			if (window.location.hash === '#agent') {
-				const agentName = localStorage.getItem('agent-target');
+				const agentName = getAgentName();
 				handleLoadAgent(agentName);
-				localStorage.setItem('agent-target', '');
 			}
 
 		}
