@@ -52,6 +52,31 @@
 
 	// Panels.
 
+
+	const handleAnimation=()=>{
+		if(! $('#gallerySlider')){
+			return
+		}
+		const imageUrls = [
+			'images/pic02.png',
+			'images/pic01.webp',
+			'images/pic03.jpg',
+			'images/me.jpg',
+			// Add more URLs as needed
+		  ];
+		  
+	 
+		  
+		  let currentIndex = 0;
+		  
+		  setInterval(() => {
+			$('#gallerySlider').fadeOut(500, function() {
+			  $(this).attr('src', imageUrls[currentIndex]).fadeIn(500);
+			  currentIndex = (currentIndex + 1) % imageUrls.length;
+			});
+		  }, 1800);
+	}
+	handleAnimation()
 	const handleLoadAgent = (agentName) => {
 		$('#agentTab').removeClass('hidden');
 		// debugger
