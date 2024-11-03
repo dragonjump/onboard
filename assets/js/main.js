@@ -61,10 +61,12 @@
 			'images/pic02.png',
 			'images/pic01.webp',
 			'images/pic03.jpg',
+			'images/me2.jpg',
 			'images/pic04.jpg',
 			'images/pic05.jpg',
-			'images/pic06.jpg',
 			'images/me.jpg',
+			'images/pic06.jpg',
+			'images/me3.jpg',
 			// Add more URLs as needed
 		];
 
@@ -77,7 +79,7 @@
 				$(this).attr('src', imageUrls[currentIndex]).fadeIn(500);
 				currentIndex = (currentIndex + 1) % imageUrls.length;
 			});
-		}, 1800);
+		}, 1900);
 	}
 	handleAnimation()
 
