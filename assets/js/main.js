@@ -52,11 +52,38 @@
 
 	// Panels.
 
+	const handleLoadAgent = (agentName) => {
+		$('#agentTab').removeClass('hidden');
+		// debugger
+		var defaultHtmlContent = `agents/empty.html`;
+
+		if (agentName) {
+			defaultHtmlContent = `agents/${agentName}.html?t=${new Date().getTime()}`;
+		}
+		$.ajax({
+			url: defaultHtmlContent,
+			method: 'GET',
+			dataType: 'html',
+			success: function (data) {
+				$('#agentIframe').html(data);
+				// code to be executed after the template is loaded
+			}
+		});
+
+
+	}
 	// Initialize.
 	(function () {
 
 		var $panel, $link;
 
+		if (window.location.search) { 
+			const urlParams = new URLSearchParams(window.location.search);
+			const agentName = urlParams.get('agentName');
+ 
+			localStorage.setItem('agent-target', (agentName));
+			location.href='#agent';
+		}
 		// Get panel, link.
 		if (window.location.hash) {
 
@@ -94,15 +121,14 @@
 		localStorage.setItem('agent-target', (agentName));
 		// debugger
 	});
-
 	// Hashchange event.
-	$window.on('hashchange', function (event) {
-
+	$window.on('hashchange', function (event) { 
 		var $panel, $link;
 
 		// Get panel, link.
 		if (window.location.hash) {
 
+			$('#agentTab').addClass('hidden');
 			$panel = $panels.filter(window.location.hash);
 			$link = $nav_links.filter('[href="' + window.location.hash + '"]');
 
@@ -112,25 +138,8 @@
 
 
 			if (window.location.hash === '#agent') {
-
-				// debugger
-				var defaultHtmlContent = `agents/empty.html`;
-
 				const agentName = localStorage.getItem('agent-target');
-				if (agentName) {
-					defaultHtmlContent = `agents/${agentName}.html`;
-				}
-				$.ajax({
-					url: defaultHtmlContent,
-					method: 'GET',
-					dataType: 'html',
-					success: function (data) {
-						$('#agentIframe').html(data);
-						// code to be executed after the template is loaded
-					}
-				});
-
-		 
+				handleLoadAgent(agentName);
 				localStorage.setItem('agent-target', '');
 			}
 
