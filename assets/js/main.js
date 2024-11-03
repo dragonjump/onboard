@@ -82,9 +82,7 @@
 			const agentName = urlParams.get('agentName');
  
 			localStorage.setItem('agent-target', (agentName));
-			location.href='#agent';
-
-		 
+			location.href='#agent'; 
 
 		}
 		// Get panel, link.
