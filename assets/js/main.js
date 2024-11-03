@@ -83,6 +83,8 @@
  
 			localStorage.setItem('agent-target', (agentName));
 			location.href='#agent';
+			window.location.search = '';
+
 		}
 		// Get panel, link.
 		if (window.location.hash) {
