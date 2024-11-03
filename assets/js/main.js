@@ -61,6 +61,9 @@
 			'images/pic02.png',
 			'images/pic01.webp',
 			'images/pic03.jpg',
+			'images/pic04.jpg',
+			'images/pic05.jpg',
+			'images/pic06.jpg',
 			'images/me.jpg',
 			// Add more URLs as needed
 		];
