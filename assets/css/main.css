@@ -1997,6 +1997,7 @@ a:hover, a:focus  , a:visited {
 	color:#777777;
 }
 
+
 @media screen and (max-width: 980px) {
 
 	#nav a span {
@@ -2327,4 +2328,9 @@ body.is-preload #wrapper {
 
 .hidden {
 	display: none !important;
+}
+
+.profile-img{
+	max-width: 300px;
+	margin:25px;
 }

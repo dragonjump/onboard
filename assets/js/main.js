@@ -59,7 +59,7 @@
 		}
 		const imageUrls = [
 			'images/pic02.png',
-			'images/pic01.webp',
+			'images/pic01.jpg',
 			'images/pic03.jpg',
 			'images/me2.jpg',
 			'images/pic04.jpg',
